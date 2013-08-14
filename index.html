@@ -1,14 +1,17 @@
 <html>
 <head>
 <title>LAVI Chat Room</title>
-<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://cdn.socket.io/stable/socket.io.js"></script>
 <script type="text/javascript">
-    $(function() {
-
-    var conn;
+    var sock = io.connect('http://localhost:5000');
+	$(function() {
     var msg = $("#msg");
     var log = $("#log");
     var name= $("#name");
+	sock.on('message', function (data) {
+	appendLog(data.message);
+	});
     function appendLog(msg) {
         var d = log[0]
         var doScroll = d.scrollTop == d.scrollHeight - d.clientHeight;
@@ -17,7 +20,7 @@
             d.scrollTop = d.scrollHeight - d.clientHeight;
         }
     }
-
+    
     $("#form").submit(function() {
         if (!conn) {
             return false;
@@ -25,23 +28,13 @@
         if (!msg.val()) {
             return false;
         }
-        conn.send(name.val()+"::"+msg.val());
+        var text=name.val()+"::"+msg.val();
+		sock.emit('send', { message: text });
         msg.val("");
         return false
-    });
+    })});
 
-    if (window["WebSocket"]) {
-        conn = new WebSocket("ws://localhost:80/ws");
-        conn.onclose = function(evt) {
-            appendLog($("<div><b>Connection closed.</b></div>"))
-        }
-        conn.onmessage = function(evt) {
-            appendLog($("<div/>").text(evt.data))
-        }
-    } else {
-        appendLog($("<div><b>You are using an old browser ,Go get new Chrome or Firefox first.</b></div>"))
-    }
-    });
+
 </script>
 <style type="text/css">
 html {

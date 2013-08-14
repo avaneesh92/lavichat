@@ -1,3 +1,8 @@
+/*
+file copied from Ryan Dahl's git repo for chat server.
+https://github.com/ry/node_chat
+Thank you Ryan. Avaneesh Tripathi
+*/
 var readFile = require("fs").readFile;
 var sys = require("sys");
 var url = require("url");
