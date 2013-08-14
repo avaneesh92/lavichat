@@ -1,4 +1,3 @@
-var createServer = require("http").createServer;
 var readFile = require("fs").readFile;
 var sys = require("sys");
 var url = require("url");
@@ -18,38 +17,6 @@ function notFound(req, res) {
 
 var getMap = {};
 
-fu.get = function (path, handler) {
-  getMap[path] = handler;
-};
-var server = createServer(function (req, res) {
-  if (req.method === "GET" || req.method === "HEAD") {
-    var handler = getMap[url.parse(req.url).pathname] || notFound;
-
-    res.simpleText = function (code, body) {
-      res.writeHead(code, { "Content-Type": "text/plain"
-                          , "Content-Length": body.length
-                          });
-      res.end(body);
-    };
-
-    res.simpleJSON = function (code, obj) {
-      var body = new Buffer(JSON.stringify(obj));
-      res.writeHead(code, { "Content-Type": "text/json"
-                          , "Content-Length": body.length
-                          });
-      res.end(body);
-    };
-
-    handler(req, res);
-  }
-});
-
-fu.listen = function (port, host) {
-  server.listen(port);
-  //sys.puts("Server at http://" + (host || "127.0.0.1") + ":" + port.toString() + "/");
-};
-
-fu.close = function () { server.close(); };
 
 function extname (path) {
   var index = path.lastIndexOf(".");
