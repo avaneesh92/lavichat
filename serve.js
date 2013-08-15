@@ -8,7 +8,7 @@ var express=require('express');
 var pass="pentium@5192126";
 var app = require('express')()
   , server = require('http').createServer(app)
-  , io = require('socket.io').listen(server,{ log: true});
+  , io = require('socket.io').listen(server,{ log: false});
 
  app.use(express.bodyParser()); 
 
