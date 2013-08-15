@@ -6,16 +6,24 @@
 <script type="text/javascript">
     var sock = io.connect('lavichat.herokuapp.com');
 	 $(function() {
-
+    var snd = new Audio("beep.wav"); // buffers automatically when created
     var msge = $("#msg");
     var name = $("#name");
+	var log = $("#log");
 	function sendMsg(){
 	var s_msg = name.val()+" :: "+msge.val();
 	$("<span>"+s_msg+"</span><br>").appendTo("#log");
 	sock.emit('send',{msg:s_msg});
 	}
 	function logMsg(data){
+	var d = log[0]
+    var doScroll = d.scrollTop == d.scrollHeight - d.clientHeight;
 	$("<span>"+data.msg+"</span><br>").appendTo("#log");
+	snd.play();
+	if (doScroll) {
+            d.scrollTop = d.scrollHeight - d.clientHeight;
+        }
+	
 	}
     $("#form").submit(function() {
         
