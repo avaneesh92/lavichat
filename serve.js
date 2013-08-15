@@ -1,11 +1,17 @@
-/*Chat server for heroku
+/*  LAVICHAT for heroku (node.js application
+file-- serve.js; main server module using express
 created on 14/8/2013
 By- Avaneesh Tripathi (avaneesh92@gmail.com)
+Description--
+Main server module built using express 3.x.x.
+socket.io is used for data transportation
+*Static single password is used
+*no session or even nick name
 */
 
 var port = process.env.PORT || 5000;
 var express=require('express');
-var pass="pentium@5192126";
+var pass="XXXXX";
 var app = require('express')()
   , server = require('http').createServer(app)
   , io = require('socket.io').listen(server,{ log: false});
