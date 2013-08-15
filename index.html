@@ -4,14 +4,14 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script type="text/javascript">
-    var sock = io.connect('http://localhost:5000');
+    var sock = io.connect('lavichat.herokuapp.com');
 	 $(function() {
 
     var msge = $("#msg");
     var name = $("#name");
 	function sendMsg(){
 	var s_msg = name.val()+" :: "+msge.val();
-	console.log(msge.val());
+	$("<span>"+s_msg+"</span><br>").appendTo("#log");
 	sock.emit('send',{msg:s_msg});
 	}
 	function logMsg(data){
