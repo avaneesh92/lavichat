@@ -2,37 +2,35 @@
 <head>
 <title>LAVI Chat Room</title>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="http://cdn.socket.io/stable/socket.io.js"></script>
+<script src="/socket.io/socket.io.js"></script>
 <script type="text/javascript">
     var sock = io.connect('http://localhost:5000');
-	$(function() {
-    var msg = $("#msg");
-    var log = $("#log");
-    var name= $("#name");
-	sock.on('message', function (data) {
-	appendLog(data.message);
-	});
-    function appendLog(msg) {
-        var d = log[0]
-        var doScroll = d.scrollTop == d.scrollHeight - d.clientHeight;
-        msg.appendTo(log)
-        if (doScroll) {
-            d.scrollTop = d.scrollHeight - d.clientHeight;
-        }
-    }
-    
+	 $(function() {
+
+    var msge = $("#msg");
+    var name = $("#name");
+	function sendMsg(){
+	var s_msg = name.val()+" :: "+msge.val();
+	console.log(msge.val());
+	sock.emit('send',{msg:s_msg});
+	}
+	function logMsg(data){
+	$("<span>"+data.msg+"</span><br>").appendTo("#log");
+	}
     $("#form").submit(function() {
-        if (!conn) {
+        
+        if (!msge.val()) {
             return false;
         }
-        if (!msg.val()) {
-            return false;
-        }
-        var text=name.val()+"::"+msg.val();
-		sock.emit('send', { message: text });
-        msg.val("");
+        sendMsg();
+        msge.val("");
         return false
-    })});
+    });
+	  
+    sock.on('message', logMsg);
+    
+    });
+	
 
 
 </script>
@@ -77,10 +75,10 @@ body {
 <body>
 <div id="log"></div>
 <form id="form">
-    <input type="submit" value="Send" />
+    <input type="submit" id="send" value="Send" />
     <input type="text" id="msg" size="64"/>
 	<label>Enter your Nick name here</label>
 	<input type="text" id="name" size="32"/>
-</form>
+
 </body>
 </html>
