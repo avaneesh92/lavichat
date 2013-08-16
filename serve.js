@@ -11,7 +11,7 @@ socket.io is used for data transportation
 
 var port = process.env.PORT || 5000;
 var express=require('express');
-var pass="XXXXX";
+var pass="pentium@5192126";
 var app = require('express')()
   , server = require('http').createServer(app)
   , io = require('socket.io').listen(server,{ log: false});
@@ -21,6 +21,9 @@ var app = require('express')()
   server.listen(port);
 app.get('/', function(request, response){
   response.sendfile(__dirname + "/login.html");
+});
+app.get('/logo.png', function(request, response){
+  response.sendfile(__dirname + "/logo.png");
 });
 app.get('/beep.wav', function(request, response){
   response.sendfile(__dirname + "/beep.wav");
