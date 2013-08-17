@@ -11,9 +11,16 @@
     var name = $("#name");
 	var log = $("#log");
 	function sendMsg(){
+	var d = log[0]
+    var doScroll = d.scrollTop == d.scrollHeight - d.clientHeight;
 	var s_msg = "<h3>"+name.val()+"</h3>"+" :: "+msge.val();
 	$("<span>"+s_msg+"</span><br>").appendTo("#log");
 	sock.emit('send',{msg:s_msg});
+	if (doScroll) {
+            d.scrollTop = d.scrollHeight - d.clientHeight;
+        }
+	
+	}
 	}
 	function logMsg(data){
 	var d = log[0]
