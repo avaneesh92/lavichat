@@ -11,7 +11,7 @@
     var name = $("#name");
 	var log = $("#log");
 	function sendMsg(){
-	var s_msg = name.val()+" :: "+msge.val();
+	var s_msg = "<h3>"+name.val()+"</h3>"+" :: "+msge.val();
 	$("<span>"+s_msg+"</span><br>").appendTo("#log");
 	sock.emit('send',{msg:s_msg});
 	}
