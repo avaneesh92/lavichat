@@ -2,13 +2,43 @@
 <head>
 <title>LAVI Chat Room</title>
 </head>
+<style>
+body
+{
+margin-left:200px;
+background:#5d9ab2 url('logo.png') no-repeat top left;
+background-size:200px 200px;
+}
 
+.container
+{
+text-align:center;
+}
+
+.center_div
+{
+border:1px solid gray;
+margin-left:auto;
+margin-right:auto;
+width:90%;
+background-color:#d0f0f6;
+text-align:left;
+padding:8px;
+}
+</style>
 <body>
-<img src="logo.png" alt="LaviChat logo">
-<h2>Please Enter lavi group's secret passcode to Start chat,</h2><br>
+<div class="container">
+<div class="center_div">
+<h3>Please Enter lavi group's secret passcode and your nickname to Start chat</h3><br>
+<div id="login">
 <form id="form" method="post" action="index.html">
-    <input name="pass" type="password" id="msg" size="64"/>
+    <label>Your nick name</label><br>
+    <input name="nick" type="text" id="msg" size="30"/><br>
+    <label>and Passcode</label><br>	
+    <input name="pass" type="password" id="msg" size="30"/>
 	<input type="submit" value="Login" />
 </form>
+</div>
+</div>
 	</body>
 </html>

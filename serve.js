@@ -12,6 +12,7 @@ socket.io is used for data transportation
 var port = process.env.PORT || 5000;
 var express=require('express');
 var pass="pentium@5192126";
+var nick="";
 var app = require('express')()
   , server = require('http').createServer(app)
   , io = require('socket.io').listen(server,{ log: false});
@@ -30,6 +31,8 @@ app.get('/beep.wav', function(request, response){
 });
 app.post('/index.html', function(request, response){
   if(request.body.pass===pass){
+      nick=request.body.nick;
+	  console.log(nick);
       response.sendfile(__dirname + "/index.html");
 	  }
   else{
@@ -43,7 +46,8 @@ io.configure(function () {
 });
 
 io.sockets.on('connection', function (socket) {
-    socket.emit('message', { msg: 'welcome to the chat' });
+    socket.emit('nick', { nick:nick });
+    socket.broadcast.emit('message', { msg:nick+' has joined the chat' });
     socket.on('send', function (data) {
         socket.broadcast.emit('message', data);
     });
