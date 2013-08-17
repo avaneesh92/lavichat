@@ -20,6 +20,7 @@ var app = require('express')()
  app.use(express.bodyParser()); 
 
   server.listen(port);
+/* Static request handlers                    */
 app.get('/', function(request, response){
   response.sendfile(__dirname + "/login.html");
 });
@@ -28,6 +29,9 @@ app.get('/logo.png', function(request, response){
 });
 app.get('/beep.wav', function(request, response){
   response.sendfile(__dirname + "/beep.wav");
+});
+app.get('/lavi.js', function(request, response){
+  response.sendfile(__dirname + "/lavi.js");
 });
 app.post('/index.html', function(request, response){
   if(request.body.pass===pass){
@@ -38,12 +42,13 @@ app.post('/index.html', function(request, response){
       response.sendfile(__dirname + "/login.html");
       }	  
 });
-
+/*Socket.io config for xhr long polling because heroku does 
+not supports websockets*/
 io.configure(function () { 
   io.set("transports", ["xhr-polling"]); 
   io.set("polling duration", 10); 
 });
-
+/*Socket event listening and responses*/
 io.sockets.on('connection', function (socket) {
     socket.emit('nick', { nick:nick });
     socket.broadcast.emit('message', { msg:'<b>INFO :: </b>'+nick+' has joined the chat' });
