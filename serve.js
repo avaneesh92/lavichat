@@ -32,7 +32,6 @@ app.get('/beep.wav', function(request, response){
 app.post('/index.html', function(request, response){
   if(request.body.pass===pass){
       nick=request.body.nick;
-	  console.log(nick);
       response.sendfile(__dirname + "/index.html");
 	  }
   else{

@@ -4,12 +4,18 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script type="text/javascript">
+
     var sock = io.connect('http://localhost:5000');
 	 $(function() {
+	 $('#log').mouseenter(function() {
+       document.title='LAVI Chat Room';
+    });
     var snd = new Audio("beep.wav"); // buffers automatically when created
     var msge = $("#msg");
     var nick="";
 	var log = $("#log");
+	
+	
 	function sendMsg(){
 	var d = log[0]
     var doScroll = d.scrollTop == d.scrollHeight - d.clientHeight;
@@ -22,9 +28,11 @@
 	
 	}
 	
+	
 	function logMsg(data){
 	var d = log[0]
     var doScroll = d.scrollTop == d.scrollHeight - d.clientHeight;
+	document.title = 'New Message!! in the Room';
 	$("<span>"+data.msg+"</span><br>").appendTo("#log");
 	snd.play();
 	if (doScroll) {
@@ -32,6 +40,8 @@
         }
 	
 	}
+	
+	
     $("#form").submit(function() {
         
         if (!msge.val()) {
@@ -41,12 +51,11 @@
         msge.val("");
         return false
     });
-	  
+	
+	
     sock.on('message', logMsg);
     sock.on('nick', function (data){
-	nick=data.nick;
-	console.log(nick);
-	
+	nick=data.nick;	
 	});
     });
 	
