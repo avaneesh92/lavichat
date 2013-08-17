@@ -46,7 +46,7 @@ io.configure(function () {
 
 io.sockets.on('connection', function (socket) {
     socket.emit('nick', { nick:nick });
-    socket.broadcast.emit('message', { msg:'<b>INFO</b>'+nick+' has joined the chat' });
+    socket.broadcast.emit('message', { msg:'<b>INFO :: </b>'+nick+' has joined the chat' });
     socket.on('send', function (data) {
         socket.broadcast.emit('message', data);
     });
