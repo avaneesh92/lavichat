@@ -1,6 +1,9 @@
 <html>
 <head>
 <title>LAVI Chat Room</title>
+<script type="text/javascript" src="/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/siofu/client.js"></script>
 <script src="/lavi.js"></script>
 <style type="text/css">
 html {
@@ -43,9 +46,10 @@ body {
 <body>
 <div id="log"></div>
 <form id="form">
-    <input type="submit" id="send" value="Send" />
+    
     <input type="text" id="msg" size="64"/>
-	
+	<input type="submit" id="send" value="Send" />
+	<input type="button" id="upload" value="Share a Photo" />
 
 </body>
 </html>

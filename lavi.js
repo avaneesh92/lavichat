@@ -1,9 +1,13 @@
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script src="/siofu/client.js"></script>
-
-    var sock = io.connect('lavichat.herokuapp.com');
+    var serverPath = "http://localhost:5000/";
+    var sock = io.connect('http://localhost:5000');
+	var siofu = new SocketIOFileUpload(sock);
 	 $(function() {
+	 
+	 function appendImg(photo){
+	 $("<img height=400 src="+serverPath+"photo />").appendTo("#log");
+	 document.title = 'New Photo!! in the Room';//change title on new photo
+	 }
+	 document.getElementById("upload").addEventListener("click", siofu.prompt, false);
 	 
 	 
 	 $('#log').mouseenter(function() { //clear title when user sees the new msg
@@ -58,5 +62,6 @@
     sock.on('nick', function (data){
 	nick=data.nick;	
 	});
+	sock.on('photo',appendImg);
     });
 	

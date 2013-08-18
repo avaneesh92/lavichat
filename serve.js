@@ -13,17 +13,30 @@ var port = process.env.PORT || 5000;
 var express=require('express');
 var pass="pentium@5192126";
 var nick="";
-var app = require('express')()
+var photo="";
+var SocketIOFileUploadServer = require('socketio-file-upload');
+var app = require('express')().use(SocketIOFileUploadServer.router)
   , server = require('http').createServer(app)
   , io = require('socket.io').listen(server,{ log: false});
-
  app.use(express.bodyParser()); 
+// app.use(express.logger()); //uncomment to eneble express logs
 
   server.listen(port);
 /* Static request handlers                    */
 app.get('/', function(request, response){
   response.sendfile(__dirname + "/login.html");
 });
+
+app.get('/photo', function(request, response){
+  console.log(photo);
+  console.log(request.path);
+  response.sendfile(__dirname +"/"+photo );
+});
+
+app.get('/jquery.min.js', function(request, response){
+  response.sendfile(__dirname + "/jquery.min.js");
+});
+
 app.get('/logo.png', function(request, response){
   response.sendfile(__dirname + "/logo.png");
 });
@@ -50,6 +63,19 @@ io.configure(function () {
 });
 /*Socket event listening and responses*/
 io.sockets.on('connection', function (socket) {
+    var uploader = new SocketIOFileUploadServer();
+    uploader.dir = __dirname;
+    uploader.listen(socket);
+    // Event on file is saved:
+    uploader.on("saved", function(event){
+	    photo=event.file.name;
+		socket.broadcast.emit('message', { msg:'<br><b>INFO :: </b>'+nick+' shared a photo' });
+		socket.emit('message', { msg:'<b>INFO :: </b> Your photo is shared' });
+        socket.broadcast.emit('photo',{photoName:event.file.name});
+		socket.emit('photo',{photoName:event.file.name});
+		
+    });
+	
     socket.emit('nick', { nick:nick });
     socket.broadcast.emit('message', { msg:'<b>INFO :: </b>'+nick+' has joined the chat' });
     socket.on('send', function (data) {
