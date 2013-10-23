@@ -15,7 +15,7 @@
     });
 	
 	
-    var snd = new Audio("beep.wav"); // buffers automatically when created
+    var snd = new Audio("beep.aac"); // buffers automatically when created
     var msge = $("#msg");
     var nick="";
 	var log = $("#log");
