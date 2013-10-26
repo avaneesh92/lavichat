@@ -8,7 +8,7 @@ socket.io is used for data transportation
 *Static single password is used
 *no session or even nick name
 */
-
+require("newrelic");
 var port = process.env.PORT || 5000;
 var express=require('express');
 var pass="pentium@5192126";
@@ -58,7 +58,7 @@ app.post('/index.html', function(request, response){
 /*Socket.io config for xhr long polling because heroku does 
 not supports websockets*/
 io.configure(function () { 
-  io.set("transports", ["xhr-polling"]); 
+  io.set("transports", ["websocket","xhr-polling"]); 
   io.set("polling duration", 10); 
 });
 /*Socket event listening and responses*/
