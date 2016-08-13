@@ -2,12 +2,12 @@
   "name": "lavichat",
   "version": "0.0.1",
   "dependencies": {
-    "express": "3.1.x",
-	"socket.io": "0.9.x",
+    "express": "x.x.x",
+	"socket.io": "x.x.x",
 	"socketio-file-upload":"x.x.x"
   },
   "engines": {
-    "node": "0.10.x",
-    "npm": "1.2.x"
+    "node": "x.x.x",
+    "npm": "x.x.x"
   }
 }
