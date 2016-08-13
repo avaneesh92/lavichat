@@ -8,10 +8,9 @@ socket.io is used for data transportation
 *Static single password is used
 *no session or even nick name
 */
-require("newrelic");
 var port = process.env.PORT || 5000;
 var express=require('express');
-var pass="pentium@5192126";
+var pass="st123";
 var nick="";
 var photo="";
 var SocketIOFileUploadServer = require('socketio-file-upload');
