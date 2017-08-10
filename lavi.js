@@ -1,5 +1,5 @@
-    var serverPath = "http://lavichat.herokuapp.com/";
-    var sock = io.connect('lavichat.herokuapp.com');
+    var serverPath = "http://lavichat2.herokuapp.com/";
+    var sock = io.connect('lavichat2.herokuapp.com');
 	var siofu = new SocketIOFileUpload(sock);
 	 $(function() {
 	 
